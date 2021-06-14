@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SistemaFacturacionMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,18 @@ namespace SistemaFacturacionMVC.DB
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Factura_Producto>()
+            .HasKey(p => new { p.numero_factura, p.codigo_producto });
+        } 
+
+
+        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Producto> Productos { get; set; }
+        public DbSet<Factura> facturas { get; set; }
+        public DbSet<Factura_Producto> factura_Productos { get; set; }
+
     }
 }
