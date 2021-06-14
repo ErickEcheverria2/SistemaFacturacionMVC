@@ -27,6 +27,7 @@ namespace SistemaFacturacionMVC.DB
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Factura> facturas { get; set; }
         public DbSet<Factura_Producto> factura_Productos { get; set; }
+        public DbSet<Usuario> usuarios { get; set; }
 
     }
 }

@@ -10,7 +10,7 @@ using SistemaFacturacionMVC.DB;
 namespace SistemaFacturacionMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210614201716_MigracionInicial")]
+    [Migration("20210614202024_MigracionInicial")]
     partial class MigracionInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -136,6 +136,30 @@ namespace SistemaFacturacionMVC.Migrations
                     b.HasKey("codigo_producto");
 
                     b.ToTable("Productos");
+                });
+
+            modelBuilder.Entity("SistemaFacturacionMVC.Models.Usuario", b =>
+                {
+                    b.Property<int>("codigo_usuario")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("clave")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("correoElectronico")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nombreApellido")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("codigo_usuario");
+
+                    b.ToTable("usuarios");
                 });
 
             modelBuilder.Entity("SistemaFacturacionMVC.Models.Factura", b =>

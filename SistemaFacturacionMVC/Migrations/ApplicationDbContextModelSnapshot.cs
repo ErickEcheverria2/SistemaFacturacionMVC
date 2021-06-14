@@ -136,6 +136,30 @@ namespace SistemaFacturacionMVC.Migrations
                     b.ToTable("Productos");
                 });
 
+            modelBuilder.Entity("SistemaFacturacionMVC.Models.Usuario", b =>
+                {
+                    b.Property<int>("codigo_usuario")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("clave")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("correoElectronico")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nombreApellido")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("codigo_usuario");
+
+                    b.ToTable("usuarios");
+                });
+
             modelBuilder.Entity("SistemaFacturacionMVC.Models.Factura", b =>
                 {
                     b.HasOne("SistemaFacturacionMVC.Models.Cliente", "Cliente")

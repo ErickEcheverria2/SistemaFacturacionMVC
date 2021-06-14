@@ -44,6 +44,21 @@ namespace SistemaFacturacionMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "usuarios",
+                columns: table => new
+                {
+                    codigo_usuario = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nombreApellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    correoElectronico = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    clave = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_usuarios", x => x.codigo_usuario);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "facturas",
                 columns: table => new
                 {
@@ -106,6 +121,9 @@ namespace SistemaFacturacionMVC.Migrations
         {
             migrationBuilder.DropTable(
                 name: "factura_Productos");
+
+            migrationBuilder.DropTable(
+                name: "usuarios");
 
             migrationBuilder.DropTable(
                 name: "facturas");
