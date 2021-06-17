@@ -6,38 +6,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// Creado y modificado por: Erick Eduardo Echeverría Garrido - 15/06/2021
+// Creado y modificado por: Erick Eduardo Echeverría Garrido - 16/06/2021
 
 namespace SistemaFacturacionMVC.Controllers
 {
-    public class ProductosController : Controller
+    public class ClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductosController(ApplicationDbContext context)
+        public ClientesController(ApplicationDbContext context)
         {
             _context = context;
         }
         public IActionResult Index()
         {
-            IEnumerable<Producto> listProductos = _context.Productos;
-            return View(listProductos);
+            IEnumerable<Cliente> list = _context.Clientes;
+            return View(list);
         }
         public IActionResult Create()
-        {            
+        {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Producto producto)
+        public IActionResult Create(Cliente cliente)
         {
             if (ModelState.IsValid)
             {
-                _context.Productos.Add(producto);
+                _context.Clientes.Add(cliente);
                 _context.SaveChanges();
 
-                TempData["mensaje"] = "El Producto se ha añadido correctamente";
+                TempData["mensaje"] = "El Cliente se ha añadido correctamente";
 
                 return RedirectToAction("Index");
             }
@@ -52,26 +52,26 @@ namespace SistemaFacturacionMVC.Controllers
                 return NotFound();
             }
 
-            var libro = _context.Productos.Find(id);
+            var cliente = _context.Clientes.Find(id);
 
-            if(libro == null)
+            if (cliente == null)
             {
                 return NotFound();
             }
 
-            return View(libro);
+            return View(cliente);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Producto producto)
+        public IActionResult Edit(Cliente cliente)
         {
             if (ModelState.IsValid)
             {
-                _context.Productos.Update(producto);
+                _context.Clientes.Update(cliente);
                 _context.SaveChanges();
 
-                TempData["mensaje"] = "El Producto se ha actualizado correctamente";
+                TempData["mensaje"] = "El Cliente se ha actualizado correctamente";
 
                 return RedirectToAction("Index");
             }
@@ -86,35 +86,35 @@ namespace SistemaFacturacionMVC.Controllers
                 return NotFound();
             }
 
-            var libro = _context.Productos.Find(id);
+            var cliente = _context.Clientes.Find(id);
 
-            if (libro == null)
+            if (cliente == null)
             {
                 return NotFound();
             }
 
-            return View(libro);
+            return View(cliente);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteProducto(Producto producto)
+        public IActionResult DeleteCliente(Cliente cliente)
         {
+            //var cliente = _context.Clientes.Find(id);
 
-            if (producto == null)
+            if (cliente == null)
             {
                 return NotFound();
             }
 
 
-            _context.Productos.Remove(producto);
+            _context.Clientes.Remove(cliente);
             _context.SaveChanges();
 
-            TempData["mensaje"] = "El Producto se ha eliminado correctamente";
+            TempData["mensaje"] = "El Cliente se ha eliminado correctamente";
 
             return RedirectToAction("Index");
 
         }
-
     }
 }

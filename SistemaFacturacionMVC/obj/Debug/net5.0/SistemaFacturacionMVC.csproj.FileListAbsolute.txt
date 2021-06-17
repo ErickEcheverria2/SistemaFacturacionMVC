@@ -433,3 +433,7 @@ C:\Users\Erick Echeverría\source\repos\SistemaFacturacionMVC\SistemaFacturacion
 C:\Users\Erick Echeverría\source\repos\SistemaFacturacionMVC\SistemaFacturacionMVC\obj\Debug\net5.0\Razor\Views\Productos\Create.cshtml.g.cs
 C:\Users\Erick Echeverría\source\repos\SistemaFacturacionMVC\SistemaFacturacionMVC\obj\Debug\net5.0\Razor\Views\Productos\Delete.cshtml.g.cs
 C:\Users\Erick Echeverría\source\repos\SistemaFacturacionMVC\SistemaFacturacionMVC\obj\Debug\net5.0\Razor\Views\Productos\Edit.cshtml.g.cs
+C:\Users\Erick Echeverría\source\repos\SistemaFacturacionMVC\SistemaFacturacionMVC\obj\Debug\net5.0\Razor\Views\Clientes\Index.cshtml.g.cs
+C:\Users\Erick Echeverría\source\repos\SistemaFacturacionMVC\SistemaFacturacionMVC\obj\Debug\net5.0\Razor\Views\Clientes\Create.cshtml.g.cs
+C:\Users\Erick Echeverría\source\repos\SistemaFacturacionMVC\SistemaFacturacionMVC\obj\Debug\net5.0\Razor\Views\Clientes\Edit.cshtml.g.cs
+C:\Users\Erick Echeverría\source\repos\SistemaFacturacionMVC\SistemaFacturacionMVC\obj\Debug\net5.0\Razor\Views\Clientes\Delete.cshtml.g.cs
