@@ -1,0 +1,76 @@
+﻿@model SistemaFacturacionMVC.Models.Producto
+@{
+    ViewData["Title"] = "Eliminar Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Eliminar Producto</h3>
+        </div>
+    </div>
+
+    <div class="row">
+       <div class="col-sm-10">
+           <form method="post" asp-action="DeleteProducto">
+
+               <input type="hidden" asp-for="codigo_producto" />
+
+               <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+               <div class="form-group">
+                   <label asp-for="tipo_producto" class="control-label"></label>
+                   <input asp-for="tipo_producto" class="form-control" disabled/>
+                   <span asp-validation-for="tipo_producto" class="text-danger"></span>
+               </div>
+
+               <div class="form-group">
+                   <label asp-for="nombre" class="control-label"></label>
+                   <input asp-for="nombre" class="form-control" disabled />
+                   <span asp-validation-for="nombre" class="text-danger"></span>
+               </div>
+
+               <div class="form-group">
+                   <label asp-for="descripcion" class="control-label"></label>
+                   <input asp-for="descripcion" class="form-control" disabled />
+                   <span asp-validation-for="descripcion" class="text-danger"></span>
+               </div>
+
+               <div class="form-group">
+                   <label asp-for="precio" class="control-label"></label>
+                   <input asp-for="precio" class="form-control" disabled />
+                   <span asp-validation-for="precio" class="text-danger"></span>
+               </div>
+
+               <div class="form-group">
+                   <label asp-for="costo" class="control-label"></label>
+                   <input asp-for="costo" class="form-control" disabled />
+                   <span asp-validation-for="costo" class="text-danger"></span>
+               </div>
+
+               <div class="form-group">
+                   <label asp-for="existencia" class="control-label"></label>
+                   <input asp-for="existencia" class="form-control" disabled />
+                   <span asp-validation-for="existencia" class="text-danger"></span>
+               </div>
+
+               <div class="form-group">
+                   <label asp-for="activo" class="control-label"></label>
+                   <input asp-for="activo" class="form-control" disabled />
+                   <span asp-validation-for="activo" class="text-danger"></span>
+               </div>
+
+               <div class="form-group">
+                   <input type="submit" value="Eliminar Producto" class="btn btn-danger" />
+               </div>
+
+           </form>
+       </div>
+    </div>
+</div>
+
+@section Scripts{ 
+    @{ <partial name="_ValidationScriptsPartial" />}
+}
+
