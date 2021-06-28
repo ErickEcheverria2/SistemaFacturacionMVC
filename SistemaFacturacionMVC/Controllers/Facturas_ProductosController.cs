@@ -20,14 +20,22 @@ namespace SistemaFacturacionMVC.Controllers
         {
             _context = context;
         }
-        public IActionResult Index(int? idFactura, int? nit)
+        
+        public async Task<IActionResult> Index(int? id)
         {
-            var list = _context.factura_Productos.Find(idFactura,nit);
-            return View(list);
+            var aplicationDbContext = _context.factura_Productos.Where(p => p.numero_factura == id).Include(p => p.Producto);
+            TempData["NoFactura"] = id;
+            return View(await aplicationDbContext.ToListAsync());
         }
-        public IActionResult Create()
+
+        public IActionResult Create(int? id)
         {
-            ViewData["productos"] = new SelectList(_context.Clientes, "codigo_producto", "nombre");
+            ViewData["productos"] = new SelectList(_context.Productos.Where(p => p.activo == 'S').ToList(), "codigo_producto", "nombre");
+            ViewData["precios"] = new SelectList(_context.Productos, "codigo_producto", "precio");
+            ViewData["existencia"] = new SelectList(_context.Productos, "codigo_producto", "existencia");
+
+            TempData["NoFactura"] = id;
+
             return View();
         }
 
@@ -37,15 +45,38 @@ namespace SistemaFacturacionMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                Producto p = _context.Productos.Find(detalle.codigo_producto);
+                detalle.precio_unitario = p.precio; // Le asigna el precio unitario ya que desde la vista lo trae érroneo
+
                 _context.factura_Productos.Add(detalle);
                 _context.SaveChanges();
 
-                TempData["mensaje"] = "El producto se ha añadido correctamente";
+                // -----------------------------
+                // -Actualizacion de Existencia-
+                // -----------------------------
+                Producto producto = _context.Productos.Find(detalle.codigo_producto); // Traigo el producto al objeto
+                producto.existencia = producto.existencia - detalle.cantidad; // Resto existencia
 
-                return RedirectToAction("Index");
+                _context.Productos.Update(producto); // Actualizo todo nuevamente
+                _context.SaveChanges(); // Guardo Cambios
+
+                // ---------------------------------------
+                // -Actualizacion del Total de la Factura-
+                // ---------------------------------------
+                Factura factura = _context.facturas.Find(detalle.numero_factura);
+                factura.total_factura = factura.total_factura + (detalle.precio_unitario * detalle.cantidad);
+                _context.facturas.Update(factura);
+                _context.SaveChanges();
+
+
+                TempData["mensaje"] = "La compra se ha añadido correctamente";
+                return RedirectToAction("Index", new { id = detalle.numero_factura });
+
             }
 
             return View();
         }
+
+
     }
 }

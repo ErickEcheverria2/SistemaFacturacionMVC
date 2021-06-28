@@ -45,10 +45,11 @@ namespace SistemaFacturacionMVC.Controllers
             {
                 _context.facturas.Add(factura);
                 _context.SaveChanges();
-
+                
                 TempData["mensaje"] = "La Factura se ha añadido correctamente";
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Facturas_Productos", new { id = factura.numero_factura });
+
             }
 
             return View();

@@ -51,6 +51,7 @@
                             <td>@item.anulada</td>
                             <td>
                                 <a asp-controller="Facturas" asp-action="Edit" asp-route-id="@item.numero_factura" class="btn btn-warning">Editar</a>
+                                <a asp-controller="Facturas_Productos" asp-action="Index" asp-route-id="@item.numero_factura" class="btn btn-warning">Ver Detalle</a>
                                 <a asp-controller="Facturas" asp-action="Delete" asp-route-id="@item.numero_factura" class="btn btn-danger">Eliminar</a>
                             </td>
                         </tr>

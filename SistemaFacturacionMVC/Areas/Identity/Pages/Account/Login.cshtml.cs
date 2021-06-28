@@ -104,7 +104,7 @@ namespace SistemaFacturacionMVC.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Correo Electronico ó Contraseña incorrecta \n Intentelo Nuevamente.");
                     return Page();
                 }
             }

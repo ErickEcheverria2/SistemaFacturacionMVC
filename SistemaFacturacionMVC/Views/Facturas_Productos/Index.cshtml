@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<SistemaFacturacionMVC.Models.Factura_Producto>
 @{
-    ViewData["Title"] = "Detalle de Factura";
+    ViewData["Title"] = "Detalle de la factura";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -18,10 +18,10 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <h3>Listado de Facturas</h3>
+            <h3>Detalle de Factura</h3>
         </div>
         <div class="col-sm-6">
-            <a class="btn btn-success d-block" asp-action="Create" asp-controller="Facturas">Crear nueva Factura</a>
+            <a class="btn btn-success d-block" asp-action="Create" asp-controller="Facturas_Productos" asp-route-id="@TempData["NoFactura"]">Ingresar Compra</a>
         </div>
     </div>
     <hr />
@@ -32,10 +32,9 @@
                 <thead>
                     <tr>
                         <td>@Html.DisplayNameFor(m => m.numero_factura)</td>
-                        <td>@Html.DisplayNameFor(m => m.codigo_producto)</td>
+                        <td>@Html.DisplayNameFor(m => m.Producto)</td>
                         <td>@Html.DisplayNameFor(m => m.cantidad)</td>
                         <td>@Html.DisplayNameFor(m => m.precio_unitario)</td>
-
                         <td>Acciones</td>
                     </tr>
                 </thead>
@@ -44,12 +43,12 @@
                     {
                         <tr>
                             <td>@item.numero_factura</td>
-                            <td>@item.codigo_producto</td>
+                            <td>@item.Producto.nombre</td>
                             <td>@item.cantidad</td>
                             <td>@item.precio_unitario</td>
                             <td>
-                                <a asp-controller="Facturas" asp-action="Edit" asp-route-id="@item.numero_factura" class="btn btn-warning">Editar</a>
-                                <a asp-controller="Facturas" asp-action="Delete" asp-route-id="@item.numero_factura" class="btn btn-danger">Eliminar</a>
+                                <a asp-controller="Facturas_Productos" asp-action="Edit" asp-route-id="@item.codigo_producto" class="btn btn-warning">Editar</a>
+                                <a asp-controller="Facturas_Productos" asp-action="Delete" asp-route-id="@item.codigo_producto" class="btn btn-danger">Eliminar</a>
                             </td>
                         </tr>
                     }
@@ -58,7 +57,7 @@
         }
         else
         {
-            <p>Actualmente no existe ninguna detalle en la Factura</p>
+            <p>Actualmente no existe ningún detalle en la factura</p>
         }
     </div>
 </div>
