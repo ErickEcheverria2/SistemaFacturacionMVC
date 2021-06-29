@@ -132,10 +132,53 @@ namespace SistemaFacturacionMVC.Controllers
             return View();
         }
 
-        public void actualizarDetalle(Factura_Producto detalleRecibido)
+        public IActionResult Delete(int? id, int? codigo_producto)
         {
-            _context.factura_Productos.Update(detalleRecibido);
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var detalle = _context.factura_Productos.Find(id,codigo_producto);
+
+            if (detalle == null)
+            {
+                return NotFound();
+            }
+
+            TempData["NoFactura"] = id;
+            TempData["precioUnitario"] = detalle.precio_unitario;
+            ViewData["productos"] = new SelectList(_context.Productos.Where(p => p.codigo_producto == codigo_producto).ToList(), "codigo_producto", "nombre");
+
+            return View(detalle);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteDetalle(Factura_Producto detalle)
+        {
+            if (detalle == null)
+            {
+                return NotFound();
+            }
+
+            Factura factura = _context.facturas.Find(detalle.numero_factura);
+            factura.total_factura = factura.total_factura - (detalle.cantidad * detalle.precio_unitario);
+            _context.facturas.Update(factura);
             _context.SaveChanges();
+
+            Producto producto = _context.Productos.Find(detalle.codigo_producto);
+            producto.existencia = producto.existencia + detalle.cantidad;
+            _context.Productos.Update(producto);
+            _context.SaveChanges();
+
+            _context.factura_Productos.Remove(detalle);
+            _context.SaveChanges();
+
+            TempData["mensaje"] = "La Compra se ha eliminado correctamente";
+
+            return RedirectToAction("Index", new { id = detalle.numero_factura });
+
         }
 
 
