@@ -20,6 +20,11 @@ namespace SistemaFacturacionMVC.DB
         {
             modelBuilder.Entity<Factura_Producto>()
             .HasKey(p => new { p.numero_factura, p.codigo_producto });
+
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
         } 
 
 

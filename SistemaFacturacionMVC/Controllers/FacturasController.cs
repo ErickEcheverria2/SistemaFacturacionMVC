@@ -109,7 +109,7 @@ namespace SistemaFacturacionMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteCliente(Factura factura)
+        public IActionResult DeleteFactura(Factura factura)
         {
             if (factura == null)
             {
