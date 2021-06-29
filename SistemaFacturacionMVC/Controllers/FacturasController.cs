@@ -69,6 +69,7 @@ namespace SistemaFacturacionMVC.Controllers
                 return NotFound();
             }
 
+            ViewData["nit"] = new SelectList(_context.Clientes, "codigo_cliente", "nit");
             return View(factura);
         }
 

@@ -1,0 +1,97 @@
+﻿@model SistemaFacturacionMVC.Models.Factura_Producto
+@{
+    ViewData["Title"] = "Editar Compra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Editar Compra</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-10">
+            <form method="post" asp-action="Edit">
+
+                <input type="hidden" asp-for="numero_factura" />
+                <input type="hidden" asp-for="codigo_producto" />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label class="control-label"></label>
+                    <input class="form-control" value="@TempData["NoFactura"]" readonly="readonly" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label"></label>
+                    <select id="listaProductos" class="form-control" asp-items="ViewBag.productos"></select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="cantidad" class="control-label"></label>
+                    <input id="cantidad" asp-for="cantidad" onchange="totalPagar();" class="form-control" min="1" step="1" />
+                    <br />
+                    <label asp-for="numero_factura" class="control-label">
+                        Cantidad en existencias:
+                        <input id="listaExistencia" asp-items="ViewBag.existencia" value="@TempData["existencia"]" readonly="readonly" />
+                    </label>
+                    <span asp-validation-for="cantidad" class="text-danger"></span>
+
+
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="precio_unitario" class="control-label"></label>
+                    <input id="precio" asp-for="precio_unitario" class="form-control" value="@TempData["precioUnitario"]" readonly="readonly" />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Confirmar Cambios" class="btn btn-primary" />
+                </div>
+
+            </form>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 id="TotalPagar" class="TotalPagar" align="center">Nuevo Total a sumar : Q. -- , --</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+<script>
+    totalPagar();
+
+    function totalPagar() {
+        let cantidad = document.getElementById('cantidad');
+        let precioUnitario = document.getElementById('precio');
+        let existencia = document.getElementById('listaExistencia');
+
+        if (cantidad.value == '' || cantidad.value <= 0) {
+            cantidad.value = 1;
+            totalPagar();
+            return;
+        }
+
+        if (cantidad.value > Number(existencia.value)) {
+            console.log(cantidad.value + " " +existencia.value)
+            alert('La cantidad solicitada sobrepasa la disponibilidad\nSe le asignara la cantidad máxima')
+            cantidad.value = Number(existencia.value);
+        }
+
+        const total = precioUnitario.value * cantidad.value;
+
+        document.querySelector('.TotalPagar').innerHTML = `Total a sumar : Q. ${total}`;
+    }
+
+</script>
+

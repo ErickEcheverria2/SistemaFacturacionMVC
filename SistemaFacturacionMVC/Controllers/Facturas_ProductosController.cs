@@ -77,6 +77,67 @@ namespace SistemaFacturacionMVC.Controllers
             return View();
         }
 
+        public IActionResult Edit(int? id, int? codigo_producto)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var detalle = _context.factura_Productos.Find(id,codigo_producto);
+
+            if (detalle == null)
+            {
+                return NotFound();
+            }
+            TempData["NoFactura"] = id;
+            TempData["CodigoProducto"] = codigo_producto;
+
+            Producto p = _context.Productos.Find(detalle.codigo_producto);
+
+            ViewData["productos"] = new SelectList(_context.Productos.Where(p => p.codigo_producto == codigo_producto).ToList(), "codigo_producto", "nombre");
+            TempData["precioUnitario"] = detalle.precio_unitario;
+            TempData["existencia"] = p.existencia + detalle.cantidad;
+            return View(detalle);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Factura_Producto detalleRecibido)
+        {
+            if (ModelState.IsValid)
+            {
+                int? IdFactura = detalleRecibido.numero_factura;
+                int? IdCodigoProducto = detalleRecibido.codigo_producto;
+
+                var detalleObtenerCosto = await _context.factura_Productos.AsNoTracking().FirstOrDefaultAsync(x => x.numero_factura == IdFactura && x.codigo_producto == IdCodigoProducto);
+
+                Factura factura = _context.facturas.Find(detalleRecibido.numero_factura);
+                factura.total_factura = factura.total_factura - (detalleObtenerCosto.cantidad * detalleObtenerCosto.precio_unitario); // Descontamos el precio anterior
+                factura.total_factura = factura.total_factura + (detalleRecibido.cantidad * detalleRecibido.precio_unitario); // Sumamos la nueva compra
+
+                _context.factura_Productos.Update(detalleRecibido);
+                _context.SaveChanges();
+
+                _context.facturas.Update(factura);
+                _context.SaveChanges();
+
+                
+
+                TempData["mensaje"] = "La Compra se ha actualizado correctamente";
+
+                return RedirectToAction("Index", new { id = detalleRecibido.numero_factura });
+            }
+
+            return View();
+        }
+
+        public void actualizarDetalle(Factura_Producto detalleRecibido)
+        {
+            _context.factura_Productos.Update(detalleRecibido);
+            _context.SaveChanges();
+        }
+
 
     }
 }

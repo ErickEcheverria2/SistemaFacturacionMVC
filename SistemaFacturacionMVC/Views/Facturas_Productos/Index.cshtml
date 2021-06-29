@@ -47,8 +47,8 @@
                             <td>@item.cantidad</td>
                             <td>@item.precio_unitario</td>
                             <td>
-                                <a asp-controller="Facturas_Productos" asp-action="Edit" asp-route-id="@item.codigo_producto" class="btn btn-warning">Editar</a>
-                                <a asp-controller="Facturas_Productos" asp-action="Delete" asp-route-id="@item.codigo_producto" class="btn btn-danger">Eliminar</a>
+                                <a @Html.ActionLink("Edit", "Edit", new { id = @TempData["NoFactura"], codigo_producto = item.codigo_producto }) ></a>
+                                <a @Html.ActionLink("Delete", "Delete", new { id = @TempData["NoFactura"], codigo_producto = item.codigo_producto })></a>
                             </td>
                         </tr>
                     }
