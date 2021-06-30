@@ -46,11 +46,11 @@
                             <td>@item.Id</td>
                             <td>@item.nombre</td>
                             <td>@item.apellido</td>
-                            <td>@item.Email</td>
-                            <td>* * * * * * * * </td>
+                            <td>@item.NormalizedUserName</td>
+                            <td>* * * * </td>
                             <td>
-                                <a asp-controller="Clientes" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
-                                <a asp-controller="Clientes" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
+                                <a asp-controller="Usuarios" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
+                                <a asp-controller="Usuarios" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
                             </td>
                         </tr>
                     }

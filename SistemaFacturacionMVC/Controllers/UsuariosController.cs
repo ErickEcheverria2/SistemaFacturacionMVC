@@ -23,5 +23,79 @@ namespace SistemaFacturacionMVC.Controllers
             IEnumerable<ApplicationUser> list = _context.Users;
             return View(list);
         }
+
+        public IActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var usuario = _context.Users.Find(id);
+
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            return View(usuario);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ApplicationUser usuario)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Users.Update(usuario);
+                _context.SaveChanges();
+
+                TempData["mensaje"] = "El Usuario se ha actualizado correctamente";
+
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
+        public IActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var usuario = _context.Users.Find(id);
+
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            return View(usuario);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteUsuario(ApplicationUser usuario)
+        {
+            //var cliente = _context.Clientes.Find(id);
+
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+
+            _context.Users.Remove(usuario);
+            _context.SaveChanges();
+
+            TempData["mensaje"] = "El Usuario se ha eliminado correctamente";
+
+            return RedirectToAction("Index");
+
+        }
+
+
     }
 }
