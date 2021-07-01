@@ -108,14 +108,23 @@ namespace SistemaFacturacionMVC.Controllers
                 return NotFound();
             }
 
+            try
+            {
+                _context.Productos.Remove(producto);
+                _context.SaveChanges();
 
-            _context.Productos.Remove(producto);
-            _context.SaveChanges();
+                TempData["mensaje"] = "El Producto se ha eliminado correctamente";
 
-            TempData["mensaje"] = "El Producto se ha eliminado correctamente";
-
-            return RedirectToAction("Index");
-
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ErrorRelacional");
+            }
+        }
+        public IActionResult ErrorRelacional()
+        {
+            return View();
         }
 
     }

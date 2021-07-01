@@ -4,6 +4,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style type="text/css">
+    .transformacion1 {
+        text-transform: capitalize;
+    }
+
+    .transformacion2 {
+        text-transform: uppercase;
+    }
+
+    .transformacion3 {
+        text-transform: lowercase;
+    }
+</style>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
@@ -60,6 +74,11 @@
                 </div>
 
             </form>
+            <center>
+                <div class="col-sm-10">
+                    <a class="btn btn-danger d-block" asp-action="Index" asp-controller="Usuarios">Regresar</a>
+                </div>
+            </center>
         </div>
     </div>
 </div>

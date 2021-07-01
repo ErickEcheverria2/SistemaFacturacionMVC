@@ -47,8 +47,8 @@
                             <td>@item.cantidad</td>
                             <td>@item.precio_unitario</td>
                             <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = @TempData["NoFactura"], codigo_producto = item.codigo_producto })
-                                @Html.ActionLink("Delete", "Delete", new { id = @TempData["NoFactura"], codigo_producto = item.codigo_producto })
+                                @Html.ActionLink("Editar", "Edit", new { id = @TempData["NoFactura"], codigo_producto = item.codigo_producto }, new { @class = "btn btn-warning" })
+                                @Html.ActionLink("Eliminar", "Delete", new { id = @TempData["NoFactura"], codigo_producto = item.codigo_producto }, new { @class = "btn btn-danger" })
                             </td>
                         </tr>
                     }
@@ -60,5 +60,11 @@
             <p>Actualmente no existe ningún detalle en la factura</p>
         }
     </div>
+    <hr />
+    <center>
+        <div class="col-sm-10">
+            <a class="btn btn-danger d-block" asp-action="Index" asp-controller="Facturas">Regresar</a>
+        </div>
+    </center>
 </div>
 

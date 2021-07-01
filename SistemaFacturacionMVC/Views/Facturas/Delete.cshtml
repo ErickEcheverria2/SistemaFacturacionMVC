@@ -21,8 +21,7 @@
 
                 <div class="form-group">
                     <label asp-for="codigo_cliente" class="control-label"></label>
-                    <input asp-for="codigo_cliente" class="form-control" disabled />
-                    <span asp-validation-for="codigo_cliente" class="text-danger"></span>
+                    <select asp-for="codigo_cliente" class="form-control" asp-items="ViewBag.nit" disabled></select>
                 </div>
 
                 <div class="form-group">
@@ -46,8 +45,13 @@
                 <div class="form-group">
                     <input type="submit" value="Confirmar" class="btn btn-danger" />
                 </div>
-
             </form>
+            <hr />
+            <center>
+                <div class="col-sm-10">
+                    <a class="btn btn-danger d-block" asp-action="Index" asp-controller="Facturas">Regresar</a>
+                </div>
+            </center>
         </div>
     </div>
 </div>

@@ -32,7 +32,8 @@ namespace SistemaFacturacionMVC.Controllers
         }
         public IActionResult Create()
         {
-            ViewData["nit"] = new SelectList(_context.Clientes, "codigo_cliente", "nit");
+            var listItems = _context.Clientes.Select(p => new SelectListItem { Value = Convert.ToString(p.codigo_cliente), Text = p.nit + " | " + p.nombres + " " + p.apellidos + "  |  Activo: "+p.activo }).ToList();
+            ViewData["nit"] = new SelectList(listItems, "Value", "Text");
 
             return View();
         }
@@ -69,7 +70,8 @@ namespace SistemaFacturacionMVC.Controllers
                 return NotFound();
             }
 
-            ViewData["nit"] = new SelectList(_context.Clientes, "codigo_cliente", "nit");
+            var listItems = _context.Clientes.Select(p => new SelectListItem { Value = Convert.ToString(p.codigo_cliente), Text = p.nit + " | " + p.nombres + " " + p.apellidos + "  |  Activo: " + p.activo }).ToList();
+            ViewData["nit"] = new SelectList(listItems, "Value", "Text");
             return View(factura);
         }
 
@@ -104,6 +106,9 @@ namespace SistemaFacturacionMVC.Controllers
                 return NotFound();
             }
 
+            var listItems = _context.Clientes.Select(p => new SelectListItem { Value = Convert.ToString(p.codigo_cliente), Text = p.nit + " | " + p.nombres + " " + p.apellidos + "  |  Activo: " + p.activo }).ToList();
+            ViewData["nit"] = new SelectList(listItems, "Value", "Text");
+
             return View(factura);
         }
 
@@ -116,14 +121,25 @@ namespace SistemaFacturacionMVC.Controllers
                 return NotFound();
             }
 
+            try
+            {
+                _context.facturas.Remove(factura);
+                _context.SaveChanges();
 
-            _context.facturas.Remove(factura);
-            _context.SaveChanges();
+                TempData["mensaje"] = "La Factura se ha eliminado correctamente";
 
-            TempData["mensaje"] = "La Factura se ha eliminado correctamente";
-
-            return RedirectToAction("Index");
-
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ErrorRelacional");
+            }
         }
+
+        public IActionResult ErrorRelacional()
+        {
+            return View();
+        }
+
     }
 }

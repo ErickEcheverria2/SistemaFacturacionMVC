@@ -45,15 +45,23 @@
 
                 <div class="form-group">
                     <label asp-for="activo" class="control-label"></label>
-                    <input asp-for="activo" class="form-control" />
+                    <select asp-for="activo" class="form-control">
+                        <option value="S">S</option>
+                        <option value="N">N</option>
+                    </select>
                     <span asp-validation-for="activo" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <input type="submit" value="Confirmar Cambios" class="btn btn-primary" />
                 </div>
-
             </form>
+            <hr />
+            <center>
+                <div class="col-sm-10">
+                    <a class="btn btn-danger d-block" asp-action="Index" asp-controller="Clientes">Regresar</a>
+                </div>
+            </center>
         </div>
     </div>
 </div>

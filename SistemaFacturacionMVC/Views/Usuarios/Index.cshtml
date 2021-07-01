@@ -4,6 +4,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style type="text/css">
+    .transformacion1 {
+        text-transform: capitalize;
+    }
+
+    .transformacion2 {
+        text-transform: uppercase;
+    }
+
+    .transformacion3 {
+        text-transform: lowercase;
+    }
+</style>
+
 <div class="container">
 
     @if (TempData["mensaje"] != null)
@@ -21,8 +35,8 @@
             <h3>Listado de Usuarios</h3>
         </div>
         @*<div class="col-sm-6">
-            <a class="btn btn-success d-block" asp-action="Create" asp-controller="Clientes">Crear nuevo Clientes</a>
-        </div>*@
+                <a class="btn btn-success d-block" asp-action="Create" asp-controller="Clientes">Crear nuevo Clientes</a>
+            </div>*@
     </div>
     <hr />
     <div class="row">
@@ -46,7 +60,7 @@
                             <td>@item.Id</td>
                             <td>@item.nombre</td>
                             <td>@item.apellido</td>
-                            <td>@item.NormalizedUserName</td>
+                            <td class="transformacion3">@item.NormalizedUserName</td>
                             <td>* * * * </td>
                             <td>
                                 <a asp-controller="Usuarios" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>

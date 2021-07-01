@@ -109,14 +109,24 @@ namespace SistemaFacturacionMVC.Controllers
                 return NotFound();
             }
 
+            try
+            {
+                _context.Clientes.Remove(cliente);
+                _context.SaveChanges();
 
-            _context.Clientes.Remove(cliente);
-            _context.SaveChanges();
+                TempData["mensaje"] = "El Cliente se ha eliminado correctamente";
 
-            TempData["mensaje"] = "El Cliente se ha eliminado correctamente";
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ErrorRelacional");
+            }
+        }
 
-            return RedirectToAction("Index");
-
+        public IActionResult ErrorRelacional()
+        {
+            return View();
         }
     }
 }

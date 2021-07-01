@@ -58,7 +58,7 @@ namespace SistemaFacturacionMVC.Controllers
 
             if ((idProducto != 0 && idProducto != null) && fechaInicio != null && fechaFinal != null)
             {
-                // "2021/06/30"
+                // "2021-06-30"
                 List<SqlParameter> parameters = new List<SqlParameter>
                     {
                        new SqlParameter("@id", idProducto),
