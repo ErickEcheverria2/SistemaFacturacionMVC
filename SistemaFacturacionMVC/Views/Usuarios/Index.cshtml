@@ -65,6 +65,8 @@
                             <td>
                                 <a asp-controller="Usuarios" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
                                 <a asp-controller="Usuarios" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
+                                <hr />
+                                <a class = "btn btn-warning" href="/Identity/Account/Manage/ChangePassword">Cambiar Contraseña</a>
                             </td>
                         </tr>
                     }

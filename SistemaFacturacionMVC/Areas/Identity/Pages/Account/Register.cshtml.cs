@@ -46,22 +46,22 @@ namespace SistemaFacturacionMVC.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "El Nombre es Obligatorio")]
             [DataType(DataType.Text)]
             [Display(Name = "Nombres")]
             public string nombre { get; set; }
             // ---
-            [Required]
+            [Required(ErrorMessage = "El Apellido es Obligatorio")]
             [DataType(DataType.Text)]
             [Display(Name = "Apellidos")]
             public string apellido { get; set; }
             // ---
-            [Required]
-            [EmailAddress]
             [Display(Name = "Correo Electronico")]
+            [Required(ErrorMessage = "El Correo Electronico es Obligatorio")]
+            [EmailAddress(ErrorMessage = "Correo Electronico Invalido")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "La Contraseña es de uso Obligatorio")]
             [StringLength(100, ErrorMessage = "La {0} debe de tener al menos {2} y un máximo de {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Contraseña")]

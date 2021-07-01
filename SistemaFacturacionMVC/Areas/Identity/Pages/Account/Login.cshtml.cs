@@ -43,11 +43,11 @@ namespace SistemaFacturacionMVC.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Ingrese el Correo Electronico")]
             [EmailAddress]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Ingrese la contraseña")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
@@ -90,7 +90,7 @@ namespace SistemaFacturacionMVC.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
+                    _logger.LogInformation("Usuario Conectado");
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -99,7 +99,7 @@ namespace SistemaFacturacionMVC.Areas.Identity.Pages.Account
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
+                    _logger.LogWarning("Cuenta de Usuario Bloqueada");
                     return RedirectToPage("./Lockout");
                 }
                 else
