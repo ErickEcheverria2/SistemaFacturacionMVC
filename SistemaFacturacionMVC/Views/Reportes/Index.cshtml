@@ -17,9 +17,25 @@
 
     <div class="card">
         <h5 class="card-header">Ventas por productos</h5>
-        <div class="card-body">
+        <div class="card-body" align="center">
             <h5 class="card-title">Ventas por productos</h5>
-            <a asp-controller="Reportes" asp-action="ReporteVentasProducto" class="btn btn-warning">Visualizar</a>
+            @Html.ActionLink("Visualizar", "ReporteVentasProducto", new { idProducto = 0, fechaInicio = "", fechaFinal = "" }, new { @class = "btn btn-warning" })
+        </div>
+    </div>
+    <hr />
+    <div class="card">
+        <h5 class="card-header">Ventas por Clientes</h5>
+        <div class="card-body" align="center">
+            <h5 class="card-title">Ventas de Clientes</h5>
+            @Html.ActionLink("Visualizar", "ReporteVentasCliente", new { idCliente = 0, fechaInicio = "", fechaFinal = "" }, new { @class = "btn btn-warning" })
+        </div>
+    </div>
+    <hr />
+    <div class="card">
+        <h5 class="card-header">Reporte de Facturas</h5>
+        <div class="card-body" align="center">
+            <h5 class="card-title">Reporte de Facturas</h5>
+            @Html.ActionLink("Visualizar", "ReporteFacturas", new { todos = 0, fechaInicio = "", fechaFinal = "" }, new { @class = "btn btn-warning" })
         </div>
     </div>
 

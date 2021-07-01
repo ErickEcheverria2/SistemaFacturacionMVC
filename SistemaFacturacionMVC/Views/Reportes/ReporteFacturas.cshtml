@@ -1,0 +1,118 @@
+﻿@model IEnumerable<SistemaFacturacionMVC.Models.P_REPORTE_FACTURAS>
+@{
+    ViewData["Title"] = "Reporte de Facturas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    @if (TempData["mensaje"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            @TempData["mensaje"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Listado de ventas</h3>
+        </div>
+        <div class="col-sm-7">
+            <button id="listaFacturas" onclick="seleccionarFactura();" class="form-control">Limpiar busqueda</button>
+            <hr />
+            <input type="date" onchange="analizarFechas();" class="form-control" id="fechaPrimero">
+            <hr />
+            <input type="date" onchange="analizarFechas();" class="form-control" id="fechaSegundo">
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <td>@Html.DisplayNameFor(m => m.Dia)</td>
+                        <td>@Html.DisplayNameFor(m => m.cantidadFacturas)</td>
+                        <td>@Html.DisplayNameFor(m => m.montoFacturado)</td>
+                        <td>@Html.DisplayNameFor(m => m.cantidadProductos)</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Dia.ToString("dd-MMMM-yyyy")</td>
+                            <td>@item.cantidadFacturas</td>
+                            <td>@item.montoFacturado</td>
+                            <td>@item.cantidadProductos</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Actualmente no existe ninguna factura</p>
+        }
+    </div>
+</div>
+
+<script>
+    function analizarFechas() {
+        var fecha1 = document.getElementById('fechaPrimero');
+        var fecha2 = document.getElementById('fechaSegundo');
+
+        fechaPrimero = fecha1.value;
+        fechaSegundo = fecha2.value;
+
+        if (fechaPrimero == "" || fechaSegundo == "") {
+            alert("NOTA: Ambas fechas son Obligatorias");
+        } else {
+            seleccionarFactura();
+        }
+
+    }
+
+    function seleccionarFactura() {
+        var fecha1 = document.getElementById('fechaPrimero');
+        var fecha2 = document.getElementById('fechaSegundo');
+
+        fechaPrimero = fecha1.value;
+        fechaSegundo = fecha2.value;
+
+        if (fechaPrimero == "" || fechaSegundo == "") {
+            var url = "@Url.Action("ReporteFacturas", "Reportes", new { todos = "param-id" })";
+            url = url.replace("param-id", 0);
+            $("#result").load(url);
+
+            window.location.href = url;
+
+            return;
+        }
+
+        if (fechaPrimero != "" && fechaSegundo != "") {
+            var url = "@Url.Action("ReporteFacturas", "Reportes", new { fechaInicio = "param-fechaInicio", fechaFinal = "param-fechaFinal" })";
+            url = url.replace("param-fechaInicio", fechaPrimero).replace("param-fechaFinal", fechaSegundo);
+            $("#result").load(url);
+
+            url = url.replace("amp;", "");
+            url = url.replace("amp;", "");
+
+            window.location.href = url;
+
+            return;
+        }
+
+    }
+
+</script>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

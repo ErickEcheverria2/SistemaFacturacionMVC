@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2r2SYl+3OjlGG+5i4RjRta6/tN3DNQPnIIVco3TZAsg5iMLC67UMjO0Yxbk9QR0ZZfchf3Nov5Z8mzcrMi+VTQ==",
+  "dgSpecHash": "nMuw8x04S9o/iLdc36P8vTWZvaoSe4vMvHgw9eYD2PQHw5S2eXdoVm7CbkpiYmSAD9RmRXIhTemZjkzO5mF4TQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Erick Echeverría\\source\\repos\\SistemaFacturacionMVC\\SistemaFacturacionMVC\\SistemaFacturacionMVC.csproj",
   "expectedPackageFiles": [
@@ -25,11 +25,11 @@
     "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",
     "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.0.1\\microsoft.data.sqlclient.sni.runtime.2.0.1.nupkg.sha512",
-    "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.entityframeworkcore\\5.0.6\\microsoft.entityframeworkcore.5.0.6.nupkg.sha512",
-    "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\5.0.6\\microsoft.entityframeworkcore.abstractions.5.0.6.nupkg.sha512",
-    "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\5.0.6\\microsoft.entityframeworkcore.analyzers.5.0.6.nupkg.sha512",
+    "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.entityframeworkcore\\5.0.7\\microsoft.entityframeworkcore.5.0.7.nupkg.sha512",
+    "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\5.0.7\\microsoft.entityframeworkcore.abstractions.5.0.7.nupkg.sha512",
+    "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\5.0.7\\microsoft.entityframeworkcore.analyzers.5.0.7.nupkg.sha512",
     "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.entityframeworkcore.design\\5.0.6\\microsoft.entityframeworkcore.design.5.0.6.nupkg.sha512",
-    "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\5.0.6\\microsoft.entityframeworkcore.relational.5.0.6.nupkg.sha512",
+    "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\5.0.7\\microsoft.entityframeworkcore.relational.5.0.7.nupkg.sha512",
     "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\5.0.6\\microsoft.entityframeworkcore.sqlserver.5.0.6.nupkg.sha512",
     "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\5.0.6\\microsoft.entityframeworkcore.tools.5.0.6.nupkg.sha512",
     "C:\\Users\\Erick Echeverría\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\5.0.0\\microsoft.extensions.caching.abstractions.5.0.0.nupkg.sha512",

@@ -1,0 +1,143 @@
+﻿@model IEnumerable<SistemaFacturacionMVC.Models.P_VENTAS_PRODUCTO_FILTRADO_CODIGOP>
+@{
+    ViewData["Title"] = "Ventas por producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    @if (TempData["mensaje"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            @TempData["mensaje"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Listado de ventas</h3>
+        </div>
+        <div class="col-sm-7">
+            <select id="listaProductos" onchange="seleccionarProducto();" class="form-control" asp-items="ViewBag.productos"></select>
+            <hr />
+            <input type="date" onchange="analizarFechas();" class="form-control" id="fechaPrimero">
+            <hr />
+            <input type="date" onchange="analizarFechas();" class="form-control" id="fechaSegundo">
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <td>@Html.DisplayNameFor(m => m.codigo_producto)</td>
+                        <td>@Html.DisplayNameFor(m => m.nombre)</td>
+                        <td>@Html.DisplayNameFor(m => m.Dia)</td>
+                        <td>@Html.DisplayNameFor(m => m.TotalVendido)</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.codigo_producto</td>
+                            <td>@item.nombre</td>
+                            <td>@item.Dia.ToString("dd-MMMM-yyyy")</td>
+                            <td>@item.TotalVendido</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Actualmente no existe ninguna venta</p>
+        }
+    </div>
+</div>
+
+<script>
+    valor1();
+
+    function valor1() {
+        let comboProductos = document.getElementById('listaProductos');
+        comboProductos.value = @TempData["idProducto"];
+    }
+
+    function analizarFechas() {
+        var fecha1 = document.getElementById('fechaPrimero');
+        var fecha2 = document.getElementById('fechaSegundo');
+
+        fechaPrimero = fecha1.value;
+        fechaSegundo = fecha2.value;
+
+        if (fechaPrimero == "" || fechaSegundo == "") {
+            alert("NOTA: Ambas fechas son Obligatorias");
+        } else {
+            seleccionarProducto();
+        }
+
+    }
+
+    function seleccionarProducto() {
+
+        var idProducto = document.getElementById('listaProductos');
+        var fecha1 = document.getElementById('fechaPrimero');
+        var fecha2 = document.getElementById('fechaSegundo');
+
+        idProducto = idProducto.value;
+        fechaPrimero = fecha1.value;
+        fechaSegundo = fecha2.value;
+
+        if (fechaPrimero == "" && fechaSegundo == "") {
+            var url = "@Url.Action("ReporteVentasProducto", "Reportes", new { idProducto = "param-id" })";
+            url = url.replace("param-id", idProducto);
+            $("#result").load(url);
+
+            window.location.href = url;
+
+            return;
+        }
+
+        if (idProducto != 0 && fechaPrimero != "" && fechaSegundo != "") {
+            var url = "@Url.Action("ReporteVentasProducto", "Reportes", new { idProducto = "param-id" , fechaInicio = "param-fechaInicio", fechaFinal = "param-fechaFinal" })";
+            url = url.replace("param-id", idProducto).replace("param-fechaInicio", fechaPrimero).replace("param-fechaFinal", fechaSegundo);
+            $("#result").load(url);
+
+            url = url.replace("amp;", "");
+            url = url.replace("amp;", "");
+
+            window.location.href = url;
+
+            return;
+        }
+
+        if (idProducto == 0 && fechaPrimero != "" && fechaSegundo != "") {
+            var url = "@Url.Action("ReporteVentasProducto", "Reportes", new { fechaInicio = "param-fechaInicio", fechaFinal = "param-fechaFinal" })";
+            url = url.replace("param-fechaInicio", fechaPrimero).replace("param-fechaFinal", fechaSegundo);
+            $("#result").load(url);
+
+            url = url.replace("amp;", "");
+            url = url.replace("amp;", "");
+
+            window.location.href = url;
+
+            return;
+        }
+
+    }
+
+</script>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+

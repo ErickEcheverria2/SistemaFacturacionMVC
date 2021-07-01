@@ -1,0 +1,142 @@
+﻿@model IEnumerable<SistemaFacturacionMVC.Models.P_VENTAS_CLIENTE>
+@{
+    ViewData["Title"] = "Ventas por Cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    @if (TempData["mensaje"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            @TempData["mensaje"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Listado de ventas</h3>
+        </div>
+        <div class="col-sm-7">
+            <select id="listaClientes" onchange="seleccionarCliente();" class="form-control" asp-items="ViewBag.clientes"></select>
+            <hr />
+            <input type="date" onchange="analizarFechas();" class="form-control" id="fechaPrimero">
+            <hr />
+            <input type="date" onchange="analizarFechas();" class="form-control" id="fechaSegundo">
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <td>@Html.DisplayNameFor(m => m.codigo_cliente)</td>
+                        <td>@Html.DisplayNameFor(m => m.nombres)</td>
+                        <td>@Html.DisplayNameFor(m => m.Dia)</td>
+                        <td>@Html.DisplayNameFor(m => m.TotalVendido)</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.codigo_cliente</td>
+                            <td>@item.nombres</td>
+                            <td>@item.Dia.ToString("dd-MMMM-yyyy")</td>
+                            <td>@item.TotalVendido</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Actualmente no existe ninguna venta</p>
+        }
+    </div>
+</div>
+
+<script>
+    valor1();
+
+    function valor1() {
+        let comboClientes = document.getElementById('listaClientes');
+        comboClientes.value = @TempData["idCliente"];
+    }
+
+    function analizarFechas() {
+        var fecha1 = document.getElementById('fechaPrimero');
+        var fecha2 = document.getElementById('fechaSegundo');
+
+        fechaPrimero = fecha1.value;
+        fechaSegundo = fecha2.value;
+
+        if (fechaPrimero == "" || fechaSegundo == "") {
+            alert("NOTA: Ambas fechas son Obligatorias");
+        } else {
+            seleccionarCliente();
+        }
+
+    }
+
+    function seleccionarCliente() {
+
+        var idClientes = document.getElementById('listaClientes');
+        var fecha1 = document.getElementById('fechaPrimero');
+        var fecha2 = document.getElementById('fechaSegundo');
+
+        idCliente = idClientes.value;
+        fechaPrimero = fecha1.value;
+        fechaSegundo = fecha2.value;
+
+        if (fechaPrimero == "" && fechaSegundo == "") {
+            var url = "@Url.Action("ReporteVentasCliente", "Reportes", new { idCliente = "param-id" })";
+            url = url.replace("param-id", idCliente);
+            $("#result").load(url);
+
+            window.location.href = url;
+
+            return;
+        }
+
+        if (idCliente != 0 && fechaPrimero != "" && fechaSegundo != "") {
+            var url = "@Url.Action("ReporteVentasCliente", "Reportes", new { idCliente = "param-id" , fechaInicio = "param-fechaInicio", fechaFinal = "param-fechaFinal" })";
+            url = url.replace("param-id", idCliente).replace("param-fechaInicio", fechaPrimero).replace("param-fechaFinal", fechaSegundo);
+            $("#result").load(url);
+
+            url = url.replace("amp;", "");
+            url = url.replace("amp;", "");
+
+            window.location.href = url;
+
+            return;
+        }
+
+        if (idCliente == 0 && fechaPrimero != "" && fechaSegundo != "") {
+            var url = "@Url.Action("ReporteVentasCliente", "Reportes", new { fechaInicio = "param-fechaInicio", fechaFinal = "param-fechaFinal" })";
+            url = url.replace("param-fechaInicio", fechaPrimero).replace("param-fechaFinal", fechaSegundo);
+            $("#result").load(url);
+
+            url = url.replace("amp;", "");
+            url = url.replace("amp;", "");
+
+            window.location.href = url;
+
+            return;
+        }
+
+    }
+
+</script>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
