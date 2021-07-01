@@ -467,3 +467,4 @@ C:\Users\Erick Echeverría\source\repos\SistemaFacturacionMVC\SistemaFacturacion
 C:\Users\Erick Echeverría\source\repos\SistemaFacturacionMVC\SistemaFacturacionMVC\obj\Debug\net5.0\Razor\Views\Clientes\ErrorRelacional.cshtml.g.cs
 C:\Users\Erick Echeverría\source\repos\SistemaFacturacionMVC\SistemaFacturacionMVC\obj\Debug\net5.0\Razor\Views\Productos\ErrorRelacional.cshtml.g.cs
 C:\Users\Erick Echeverría\source\repos\SistemaFacturacionMVC\SistemaFacturacionMVC\obj\Debug\net5.0\Razor\Views\Facturas\ErrorRelacional.cshtml.g.cs
+C:\Users\Erick Echeverría\source\repos\SistemaFacturacionMVC\SistemaFacturacionMVC\obj\Debug\net5.0\Razor\Views\Facturas_Productos\ErrorCompraRealizadaAnteriormente.cshtml.g.cs

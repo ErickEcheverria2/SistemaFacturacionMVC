@@ -45,35 +45,50 @@ namespace SistemaFacturacionMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                Producto p = _context.Productos.Find(detalle.codigo_producto);
-                detalle.precio_unitario = p.precio; // Le asigna el precio unitario ya que desde la vista lo trae érroneo
+                try
+                {
+                    Producto p = _context.Productos.Find(detalle.codigo_producto);
+                    detalle.precio_unitario = p.precio; // Le asigna el precio unitario ya que desde la vista lo trae érroneo
 
-                _context.factura_Productos.Add(detalle);
-                _context.SaveChanges();
+                    _context.factura_Productos.Add(detalle);
+                    _context.SaveChanges();
 
-                // -----------------------------
-                // -Actualizacion de Existencia-
-                // -----------------------------
-                Producto producto = _context.Productos.Find(detalle.codigo_producto); // Traigo el producto al objeto
-                producto.existencia = producto.existencia - detalle.cantidad; // Resto existencia
+                    // -----------------------------
+                    // -Actualizacion de Existencia-
+                    // -----------------------------
+                    Producto producto = _context.Productos.Find(detalle.codigo_producto); // Traigo el producto al objeto
+                    producto.existencia = producto.existencia - detalle.cantidad; // Resto existencia
 
-                _context.Productos.Update(producto); // Actualizo todo nuevamente
-                _context.SaveChanges(); // Guardo Cambios
+                    _context.Productos.Update(producto); // Actualizo todo nuevamente
+                    _context.SaveChanges(); // Guardo Cambios
 
-                // ---------------------------------------
-                // -Actualizacion del Total de la Factura-
-                // ---------------------------------------
-                Factura factura = _context.facturas.Find(detalle.numero_factura);
-                factura.total_factura = factura.total_factura + (detalle.precio_unitario * detalle.cantidad);
-                _context.facturas.Update(factura);
-                _context.SaveChanges();
+                    // ---------------------------------------
+                    // -Actualizacion del Total de la Factura-
+                    // ---------------------------------------
+                    Factura factura = _context.facturas.Find(detalle.numero_factura);
+                    factura.total_factura = factura.total_factura + (detalle.precio_unitario * detalle.cantidad);
+                    _context.facturas.Update(factura);
+                    _context.SaveChanges();
 
 
-                TempData["mensaje"] = "La compra se ha añadido correctamente";
-                return RedirectToAction("Index", new { id = detalle.numero_factura });
+                    TempData["mensaje"] = "La compra se ha añadido correctamente";
+                    return RedirectToAction("Index", new { id = detalle.numero_factura });
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("ErrorCompraRealizadaAnteriormente", new { idFactura = detalle.numero_factura, codigoProducto = detalle.codigo_producto });
+                }
+                
 
             }
 
+            return View();
+        }
+
+        public IActionResult ErrorCompraRealizadaAnteriormente(int idFactura, int codigoProducto)
+        {
+            TempData["NoFactura"] = idFactura;
+            TempData["CodigoProducto"] = codigoProducto;
             return View();
         }
 
@@ -116,13 +131,20 @@ namespace SistemaFacturacionMVC.Controllers
                 factura.total_factura = factura.total_factura - (detalleObtenerCosto.cantidad * detalleObtenerCosto.precio_unitario); // Descontamos el precio anterior
                 factura.total_factura = factura.total_factura + (detalleRecibido.cantidad * detalleRecibido.precio_unitario); // Sumamos la nueva compra
 
+                Producto producto = _context.Productos.Find(detalleRecibido.codigo_producto);
+                producto.existencia = producto.existencia + detalleObtenerCosto.cantidad;
+                producto.existencia = producto.existencia - detalleRecibido.cantidad;
+
                 _context.factura_Productos.Update(detalleRecibido);
                 _context.SaveChanges();
 
                 _context.facturas.Update(factura);
                 _context.SaveChanges();
 
-                
+                _context.Productos.Update(producto);
+                _context.SaveChanges();
+
+
 
                 TempData["mensaje"] = "La Compra se ha actualizado correctamente";
 

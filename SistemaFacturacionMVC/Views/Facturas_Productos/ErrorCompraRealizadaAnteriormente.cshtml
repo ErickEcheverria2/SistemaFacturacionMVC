@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "ErrorCompraRealizadaAnteriormente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<img src="/img/ProductoYaComprado.jpg" class="img-fluid" alt="Ups...">
+<hr />
+<center>
+    <div class="col-sm-10">
+        @Html.ActionLink("Editar Compra", "Edit", new { id = @TempData["NoFactura"], codigo_producto = @TempData["CodigoProducto"] }, new { @class = "btn btn-warning" })
+    </div>
+</center>
+

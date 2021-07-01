@@ -29,7 +29,7 @@ AS
 	INNER JOIN factura_Productos fp ON fp.codigo_producto = p.codigo_producto
 	INNER JOIN facturas f ON f.numero_factura = fp.numero_factura
 	WHERE fp.codigo_producto = @Id_Producto
-	AND f.fecha BETWEEN  @FechaInicio AND @FechaFinal
+	AND f.fecha BETWEEN  @FechaInicio AND DATEADD(DAY,1,@FechaFinal)
 	GROUP BY p.codigo_producto, p.nombre, CONVERT(DATE,f.fecha)
 	ORDER BY p.codigo_producto, Dia;
 
@@ -40,7 +40,7 @@ AS
 	FROM Productos p
 	INNER JOIN factura_Productos fp ON fp.codigo_producto = p.codigo_producto
 	INNER JOIN facturas f ON f.numero_factura = fp.numero_factura
-	WHERE f.fecha BETWEEN  @FechaInicio AND @FechaFinal
+	WHERE f.fecha BETWEEN  @FechaInicio AND DATEADD(DAY,1,@FechaFinal)
 	GROUP BY p.codigo_producto, p.nombre, CONVERT(DATE,f.fecha)
 	ORDER BY p.codigo_producto, Dia;
 
@@ -72,7 +72,7 @@ AS
 	INNER JOIN facturas f ON f.codigo_cliente = c.codigo_cliente
 	INNER JOIN factura_Productos fp ON fp.numero_factura = f.numero_factura
 	WHERE f.codigo_cliente = @id
-	AND f.fecha BETWEEN  @FechaInicio AND @FechaFinal
+	AND f.fecha BETWEEN  @FechaInicio AND DATEADD(DAY,1,@FechaFinal)
 	GROUP BY CONVERT(DATE,f.fecha), c.codigo_cliente, c.nombres, c.apellidos
 	ORDER BY Dia, c.codigo_cliente;
 
@@ -83,7 +83,7 @@ AS
 	INNER JOIN facturas f ON f.codigo_cliente = c.codigo_cliente
 	INNER JOIN factura_Productos fp ON fp.numero_factura = f.numero_factura
 	WHERE f.fecha >= @FechaInicio
-	AND f.fecha <= @FechaFinal
+	AND f.fecha <= DATEADD(DAY,1,@FechaFinal)
 	GROUP BY CONVERT(DATE,f.fecha), c.codigo_cliente, c.nombres, c.apellidos
 	ORDER BY Dia, c.codigo_cliente;
 
@@ -94,13 +94,13 @@ AS
 	INNER JOIN factura_Productos fp ON fp.numero_factura = f.numero_factura
 	GROUP BY CONVERT(DATE,f.fecha)
 	ORDER BY Dia;
-	
+
 CREATE PROC P_REPORTE_FACTURAS_FECHAS @FechaInicio Datetime, @FechaFinal Datetime
 AS
 	SELECT CONVERT(DATE,f.fecha) AS Dia, COUNT(*) AS CantidadFacturas, SUM(f.total_factura) AS MontoFacturado, SUM(fp.cantidad) AS CantidadProductos
 	FROM facturas f
 	INNER JOIN factura_Productos fp ON fp.numero_factura = f.numero_factura
 	WHERE f.fecha >= @FechaInicio
-	AND f.fecha <= @FechaFinal
+	AND f.fecha <= DATEADD(DAY,1,@FechaFinal)
 	GROUP BY CONVERT(DATE,f.fecha)
 	ORDER BY Dia; 
