@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SistemaFacturacionMVC.Areas.Identity.Data;
 using SistemaFacturacionMVC.Data;
 using SistemaFacturacionMVC.DB;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace SistemaFacturacionMVC.Controllers
 {
+    [Authorize]
     public class UsuariosController : Controller
     {
         private readonly AuthDbContext _context;
